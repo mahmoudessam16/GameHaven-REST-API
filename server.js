@@ -11,8 +11,6 @@ import gameRouter from "./routes/game.route.js";
 
 import morgan from "morgan";
 import loggerMiddleware from "./middlewares/loggerMiddleware.js";
-import auth from "./middlewares/authMiddleware.js";
-import isAdmin from "./middlewares/roleMiddleWare.js";
 
 const app = express();
 

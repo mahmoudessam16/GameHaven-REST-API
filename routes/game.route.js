@@ -9,6 +9,8 @@ import {
   gameValidation,
   validateGame,
 } from "../middlewares/validateGame.middleware.js";
+import isAdmin from "../middlewares/roleMiddleWare.js";
+import auth from "../middlewares/authMiddleware.js";
 import express from "express";
 import multer from "multer";
 
@@ -34,25 +36,30 @@ const filter = (req, file, cb) => {
 };
 
 const upload = multer({ storage, fileFilter: filter });
-router
-  .route("/")
-  .get(getGames)
-  .post(
-    upload.single("coverImage"),
-    gameValidation,
-    validateGame,
-    createNewGame
-  );
+router.route("/").get(getGames).post(
+  auth, // check user is authenticated
+  isAdmin, // ensure only admins can create new games
+  upload.single("coverImage"),
+  gameValidation,
+  validateGame,
+  createNewGame
+);
 
 router
   .route("/:id")
   .get(getAGameById)
   .put(
+    auth, // check user is authenticated
+    isAdmin, // ensure only admins can update games
     upload.single("coverImage"),
     gameValidation,
     validateGame,
     updateGameById
   )
-  .delete(deleteGameById);
+  .delete(
+    auth, // check user is authenticated
+    isAdmin, // ensure only admins can delete games
+    deleteGameById
+  );
 
 export default router;
