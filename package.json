@@ -1,7 +1,7 @@
 {
   "name": "gamehaven-rest-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "GameHaven is a fictional digital video game marketplace. This project represents the backend RESTful API for the platform, developed using **Node.js**, **Express.js**, and **MongoDB** as part of the ITI Node.js Final Project.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,5 +21,13 @@
     "morgan": "^1.10.0",
     "multer": "^2.0.0",
     "nodemon": "^3.1.10"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahmoudessam16/GameHaven-REST-API.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mahmoudessam16/GameHaven-REST-API/issues"
+  },
+  "homepage": "https://github.com/mahmoudessam16/GameHaven-REST-API#readme"
 }
