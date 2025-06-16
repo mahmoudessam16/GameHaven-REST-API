@@ -1,18 +1,17 @@
 import Cart from "../models/cart.model.js";
-import Game from "../models/game.model.js"; //
+import Game from "../models/game.model.js";
 
 const addItemToCart = async (userId, gameId, quantity) => {
-  const game = await Game.findById(gameId); //
+  const game = await Game.findById(gameId);
 
   if (!game) {
     throw new Error("Game not found!");
   }
 
   if (game.stock < quantity) {
-    //
     throw new Error(
       `Not enough stock for ${game.title}. Available: ${game.stock}`
-    ); //
+    );
   }
 
   let cart = await Cart.findOne({ user: userId });
@@ -32,19 +31,18 @@ const addItemToCart = async (userId, gameId, quantity) => {
     const newQuantity = existingItem.quantity + quantity;
 
     if (game.stock < newQuantity) {
-      //
       throw new Error(
         `Adding ${quantity} to cart would exceed available stock for ${game.title}. Current in cart: ${existingItem.quantity}, Available: ${game.stock}`
-      ); //
+      );
     }
     existingItem.quantity = newQuantity;
-    existingItem.priceAtAddToCart = game.price; // // Update price in case it changed
+    existingItem.priceAtAddToCart = game.price; // Update price in case it changed
   } else {
     // If item does not exist, add new item
     cart.items.push({
       game: gameId,
       quantity: quantity,
-      priceAtAddToCart: game.price, //
+      priceAtAddToCart: game.price,
     });
   }
 
@@ -55,7 +53,7 @@ const addItemToCart = async (userId, gameId, quantity) => {
 const getCart = async (userId) => {
   const cart = await Cart.findOne({ user: userId }).populate({
     path: "items.game",
-    select: "title platform genera price coverImage stock", // // Select relevant game details, note 'genera'
+    select: "title platform genera price coverImage stock", // Select relevant game details, note 'genera'
   });
 
   if (!cart) {
